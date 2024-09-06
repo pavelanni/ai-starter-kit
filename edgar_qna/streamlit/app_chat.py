@@ -88,7 +88,12 @@ with st.sidebar:
             else:
                 if os.path.exists(db_path):
                     st.session_state.db_path = db_path
-                    st.session_state.sec_multiturn = set_retrieval_conversational_chain(config={'persist_directory': db_path})
+                    ticker = db_path.split("/")[-1]
+                    config={
+                        'persist_directory': db_path,
+                        'collection_name':f"{ticker}_collection"
+                    }
+                    st.session_state.sec_multiturn = set_retrieval_conversational_chain(config)
                     st.toast("Database loaded")
 
                 else:
@@ -104,7 +109,12 @@ with st.sidebar:
         if st.button("Reset conversation"):
             # reset create conversation chain
             db_path = st.session_state.db_path
-            st.session_state.sec_multiturn = set_retrieval_conversational_chain(config={'persist_directory': db_path})
+            ticker = db_path.split("/")[-1]
+            config={
+                'persist_directory': db_path,
+                'collection_name':f"{ticker}_collection"
+            }
+            st.session_state.sec_multiturn = set_retrieval_conversational_chain(config)
             st.session_state.chat_history = []
             st.toast(
                 "Conversation reset. The next response will clear the history on the screen"

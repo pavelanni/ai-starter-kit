@@ -116,9 +116,13 @@ with st.sidebar:
         with st.spinner("Loading vector DB..."):
             tickers = sorted([ticker_company_1, ticker_company_2])
             path_suffix = '_'.join(tickers)
-            st.session_state.sec_multiturn = set_retrieval_comparative_process(config={'persist_directory': f"{PERSIST_DIRECTORY}/multisource_{path_suffix}", 
-                                                                                     'tickers': tickers, 
-                                                                                     'force_reload': force_reload})
+            config={
+                'persist_directory': f"{PERSIST_DIRECTORY}/multisource_{path_suffix}", 
+                'tickers': tickers, 
+                'force_reload': force_reload,
+                'collection_name':f"{path_suffix}_collection"
+            }
+            st.session_state.sec_multiturn = set_retrieval_comparative_process(config)
             st.toast("Database loaded")
 
     st.markdown("**3. Ask questions about your data!**")
@@ -137,9 +141,13 @@ with st.sidebar:
         if st.button("Reset conversation"):
             tickers = sorted([ticker_company_1, ticker_company_2])
             path_suffix = '_'.join(tickers)
-            st.session_state.sec_multiturn = set_retrieval_comparative_process(config={'persist_directory': f"{PERSIST_DIRECTORY}/multisource_{path_suffix}", 
-                                                                                     'tickers': tickers, 
-                                                                                     'force_reload': force_reload})
+            config={
+                'persist_directory': f"{PERSIST_DIRECTORY}/multisource_{path_suffix}", 
+                'tickers': tickers, 
+                'force_reload': force_reload,
+                'collection_name':f"{path_suffix}_collection"
+            }
+            st.session_state.sec_multiturn = set_retrieval_comparative_process(config)
             st.session_state.chat_history = []
             st.toast(
                 "Conversation reset. The next response will clear the history on the screen"

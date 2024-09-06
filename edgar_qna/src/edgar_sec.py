@@ -162,7 +162,7 @@ class SecFiling:
             )
         
         if persist_directory and os.path.exists(persist_directory) and not force_reload:
-            self.vector_store = vectordb.load_vdb(persist_directory, embeddings)
+            self.vector_store = vectordb.load_vdb(persist_directory, embeddings, collection_name=self.config.get("collection_name"))
         else:
             all_chunks = []
             for ticker in tickers:
@@ -171,7 +171,7 @@ class SecFiling:
                 chunks = vectordb.get_text_chunks(parsed_documents, self.retrieval_info["chunk_size"], self.retrieval_info["chunk_overlap"])
                 all_chunks.extend(chunks)
 
-            self.vector_store = vectordb.create_vector_store(all_chunks, embeddings, self.retrieval_info["db_type"], persist_directory)
+            self.vector_store = vectordb.create_vector_store(all_chunks, embeddings, self.retrieval_info["db_type"], persist_directory, collection_name=self.config.get("collection_name"))
 
     def retrieval_qa_chain(self) -> None:
         """Defines the retrieval chain

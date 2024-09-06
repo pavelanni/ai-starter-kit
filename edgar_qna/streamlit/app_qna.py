@@ -53,6 +53,7 @@ with st.sidebar.form(key="Form1"):
         with st.spinner(text="Fetching Edgar data..."):
             config = st.session_state["config"]
             config["persist_directory"] = f"{PERSIST_DIRECTORY}/{ticker}"
+            config["collection_name"] = f"{ticker}_collection"
             st.session_state["config"] = config
 
             st.session_state["sec_qa"] = set_retrieval_qa_chain(st.session_state["config"])
